@@ -3222,4 +3222,260 @@
                 const questionText = toHiragana(item.querySelector(".faq-question-text").textContent);
                 const answerText = toHiragana(item.querySelector(".answer-content").textContent);
                 const allText = questionText + " " + answerText;
+                const matches = searchTerms.every(term => allText.includes(term));
+                item.style.display = matches ? "block" : "none";
+            });
+            document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+        }
+        
+        
+        // お気に入り機能
+        function loadFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('faqFavorites') || '[]');
+            return favorites;
+        }
+
+        function saveFavorites(favorites) {
+            localStorage.setItem('faqFavorites', JSON.stringify(favorites));
+        }
+
+        function toggleFavorite(faqId) {
+            const favorites = loadFavorites();
+            const index = favorites.indexOf(faqId);
             
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(faqId);
+            }
+            
+            saveFavorites(favorites);
+            updateFavoriteButtons();
+            updateFavoritesList();
+        }
+
+        function updateFavoriteButtons() {
+            const favorites = loadFavorites();
+            const buttons = document.querySelectorAll('.favorite-btn');
+            
+            buttons.forEach(button => {
+                const faqId = button.getAttribute('onclick').match(/toggleFavorite\('([^']+)'\)/)?.[1];
+                if (faqId && favorites.includes(faqId)) {
+                    button.classList.add('active');
+                    button.textContent = '登録済み';
+                    button.title = 'お気に入りから削除';
+                } else {
+                    button.classList.remove('active');
+                    button.textContent = 'お気に入り登録';
+                    button.title = 'お気に入りに登録';
+                }
+            });
+        }
+
+        function updateFavoritesList() {
+            const favorites = loadFavorites();
+            const favoritesSection = document.getElementById('favoritesSection');
+            const favoritesContent = document.getElementById('favoritesContent');
+            const favoritesEmpty = document.getElementById('favoritesEmpty');
+            
+            if (favorites.length > 0) {
+                favoritesSection.style.display = 'block';
+                favoritesEmpty.style.display = 'none';
+                
+                let html = '';
+                favorites.forEach(faqId => {
+                    const faqItem = document.getElementById('answer-' + faqId)?.closest('.faq-item');
+                    if (faqItem) {
+                        const questionText = faqItem.querySelector('.faq-question-text').textContent.trim();
+                        html += `
+                            <div class="favorite-item">
+                                <div class="favorite-item-text" onclick="scrollToFAQ('${faqId}')">${questionText}</div>
+                                <button class="remove-favorite" onclick="toggleFavorite('${faqId}')" title="お気に入りから削除">×</button>
+                            </div>
+                        `;
+                    }
+                });
+                favoritesContent.innerHTML = html;
+            } else {
+                favoritesSection.style.display = 'none';
+            }
+        }
+
+        function toggleFavoritesList() {
+            const favoritesList = document.getElementById('favoritesList');
+            const toggleText = document.getElementById('favoritesToggleText');
+            
+            if (favoritesList.classList.contains('show')) {
+                favoritesList.classList.remove('show');
+                toggleText.textContent = '表示';
+            } else {
+                favoritesList.classList.add('show');
+                toggleText.textContent = '非表示';
+            }
+        }
+
+        function scrollToFAQ(faqId) {
+            const faqItem = document.getElementById('answer-' + faqId)?.closest('.faq-item');
+            if (faqItem) {
+                faqItem.scrollIntoView({ behavior: 'smooth' });
+                // FAQ項目をハイライト
+                faqItem.style.boxShadow = '0 0 15px rgba(33, 150, 243, 0.5)';
+                setTimeout(() => {
+                    faqItem.style.boxShadow = '';
+                }, 2000);
+            }
+        }
+
+        // ページ読み込み時にお気に入りを初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFavoriteButtons();
+            updateFavoritesList();
+        });
+
+        function openImageModal(imageUrl) {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            modal.style.display = "block";
+            modalImg.src = imageUrl;
+        }
+
+        function openHtmlModal(htmlFile, event) {
+            // インライン表示に変更
+            if (htmlFile === 'Android端末電源切る方法.html') {
+                showInlineModal('restart-modal');
+            } else if (htmlFile === 'battery-optimizer-simple.html') {
+                showInlineModal('battery-modal');  
+            } else if (htmlFile === 'chrome-update-guide.html') {
+                showInlineModal('chrome-modal');
+            } else if (htmlFile === 'friend-referral-guide.html') {
+                showInlineModal('friend-referral-modal');
+            }
+        }
+
+        // インライン表示機能
+        function showInlineModal(modalId) {
+            hideAllModals();
+            const modal = document.getElementById(modalId);
+            const modalArea = document.getElementById('modal-area');
+            if (modal && modalArea) {
+                // モーダルをコピーしてタブの上の専用エリアに表示
+                modalArea.innerHTML = modal.outerHTML;
+                const displayedModal = modalArea.querySelector('.inline-modal');
+                displayedModal.style.display = 'block';
+                
+                // バッテリーモーダルの場合は、イベントハンドラーを再設定
+                if (modalId === 'battery-modal') {
+                    const batteryHeaders = displayedModal.querySelectorAll('[onclick*="toggleManufacturer"]');
+                    batteryHeaders.forEach(header => {
+                        // 既存のonclickを削除してイベントリスナーを追加
+                        header.removeAttribute('onclick');
+                        header.addEventListener('click', function() {
+                            toggleManufacturer(this);
+                        });
+                    });
+                }
+                
+                // タブの上に表示されたモーダルまでスクロール
+                modalArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function hideInlineModal(modalId) {
+            const modalArea = document.getElementById('modal-area');
+            if (modalArea) {
+                modalArea.innerHTML = '';
+            }
+        }
+        
+        // 全てのモーダルを閉じる汎用関数
+        function closeAllModals() {
+            const modalArea = document.getElementById('modal-area');
+            if (modalArea) {
+                modalArea.innerHTML = '';
+            }
+        }
+
+        function toggleChromeSection(section) {
+            const content = section.nextElementSibling;
+            const icon = section.querySelector('.toggle-icon');
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                section.classList.add('active');
+                icon.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                section.classList.remove('active');
+                icon.textContent = '▼';
+            }
+        }
+
+        function toggleChromeUpdateSection(section) {
+            const content = section.nextElementSibling;
+            const icon = section.querySelector('.toggle-icon');
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                section.classList.add('active');
+                icon.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                section.classList.remove('active');
+                icon.textContent = '▼';
+            }
+        }
+
+        function toggleManufacturer(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                header.classList.remove('active');
+                icon.textContent = '▼';
+            } else {
+                content.classList.add('active');
+                header.classList.add('active');
+                icon.textContent = '▲';
+            }
+        }
+
+        function hideAllModals() {
+            const modals = document.querySelectorAll('.inline-modal');
+            modals.forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+        
+        function closeImageModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+        
+        // 友達紹介ガイドのコンテンツ切り替え関数
+        function showReferrerContent() {
+            const referrerContent = document.getElementById('referrer-content');
+            const refereeContent = document.getElementById('referee-content');
+            
+            if (referrerContent && refereeContent) {
+                referrerContent.style.display = 'block';
+                refereeContent.style.display = 'none';
+            }
+        }
+
+        function showRefereeContent() {
+            const referrerContent = document.getElementById('referrer-content');
+            const refereeContent = document.getElementById('referee-content');
+            
+            if (referrerContent && refereeContent) {
+                referrerContent.style.display = 'none';
+                refereeContent.style.display = 'block';
+            }
+        }
+
+        window.addEventListener("load", function() {
+            const firstTab = document.querySelector(".tab");
+            if (firstTab) filterFAQ(firstTab.textContent.trim(), firstTab);
+        });
+    </script>
+</body>
+</html>
