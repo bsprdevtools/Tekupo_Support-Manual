@@ -2,7 +2,7 @@
   "name": "てくポ支援マニュアル",
   "short_name": "てくポ支援",
   "description": "てくポ（脳にいいアプリ）のサポートマニュアル・よくある質問",
-  "start_url": "./Tekuposupportmanual.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f2f2f7",
   "theme_color": "#007aff",
@@ -12,13 +12,13 @@
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ],
   "categories": ["health", "lifestyle", "productivity"],
