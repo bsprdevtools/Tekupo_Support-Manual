@@ -2,7 +2,7 @@
 const CACHE_NAME = 'tekupo-support-v1';
 const urlsToCache = [
   './',
-  './Tekuposupportmanual.html',
+  './index.html',
   './manifest.json'
 ];
 
