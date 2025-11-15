@@ -1,5 +1,5 @@
 // Service Worker for 脳にいいアプリ FAQ PWA
-const CACHE_NAME = 'tekupo-support-v1';
+const CACHE_NAME = 'tekupo-support-v2';
 const urlsToCache = [
   './',
   './index.html',
@@ -17,31 +17,28 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// フェッチ時の処理（キャッシュファーストストラテジー）
+// フェッチ時の処理（ネットワークファーストストラテジー）
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
+    // HTMLファイルは常に最新版をチェック
+    fetch(event.request)
       .then((response) => {
-        // キャッシュにあればそれを返す
-        if (response) {
-          return response;
+        // 有効なレスポンスかチェック
+        if (!response || response.status !== 200) {
+          // ネットワークエラーの場合はキャッシュから返す
+          return caches.match(event.request);
         }
-        // なければネットワークから取得
-        return fetch(event.request).then(
-          (response) => {
-            // 有効なレスポンスかチェック
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-            // レスポンスをクローンしてキャッシュに保存
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-            return response;
-          }
-        );
+        // 新しいレスポンスをキャッシュに保存
+        const responseToCache = response.clone();
+        caches.open(CACHE_NAME)
+          .then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        return response;
+      })
+      .catch(() => {
+        // ネットワークに接続できない場合はキャッシュから返す
+        return caches.match(event.request);
       })
   );
 });
