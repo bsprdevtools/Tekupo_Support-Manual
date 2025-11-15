@@ -80,6 +80,10 @@
             border: 2px solid transparent;
             background: #ffffff;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
         }
         .tab:hover {
             background: #f8f9fa;
@@ -424,6 +428,31 @@
         }
         .close:hover {
             color: #bbb;
+        }
+
+        /* スマートフォン向け調整 */
+        @media screen and (max-width: 600px) {
+            .tab {
+                font-size: 12px;
+                padding: 10px 8px;
+                margin: 0 1px;
+            }
+
+            .tabs {
+                padding: 4px;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .tab {
+                font-size: 11px;
+                padding: 8px 4px;
+                margin: 0;
+            }
+
+            .tabs {
+                padding: 3px;
+            }
         }
     </style>
 
