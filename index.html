@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>脳にいいアプリ FAQ</title>
+    <title>てくポ支援マニュアル</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -426,6 +426,15 @@
             color: #bbb;
         }
     </style>
+
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007aff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="てくポ支援">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="description" content="てくポ（脳にいいアプリ）のサポートマニュアル・よくある質問">
 </head>
 <body>
     <div class="container">
@@ -3492,6 +3501,21 @@
             const firstTab = document.querySelector(".tab");
             if (firstTab) filterFAQ(firstTab.textContent.trim(), firstTab);
         });
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
     </script>
 </body>
 </html>
