@@ -533,6 +533,7 @@
             <div class="tab" onclick="filterFAQ('歩数・脳トレ・食事・ホーム画面', this); return false;">歩数・脳ト...</div>
             <div class="tab" onclick="filterFAQ('全般・各種設定・ポイント', this); return false;">全般・各種...</div>
             <div class="tab" onclick="filterFAQ('機種変更・データ引継ぎ・退会', this); return false;">機種変更・...</div>
+            <div class="tab" onclick="filterFAQ('まちえみ', this); return false;"><span style="color: #ff0000; font-weight: bold; font-size: 0.75em; margin-right: 4px;">NEW</span>まちえみ</div>
         </div>
         
         <!-- お気に入りセクション -->
@@ -1158,7 +1159,7 @@
   <div class="faq-answer" id="answer-faq-49">
     <div class="answer-content">2バック課題は、最初の2問は例題（〇×なし）で文字を覚え、3問目以降は「2つ前と同じ文字か」を判断して〇×ボタンで回答する全10問の脳トレです。</div>
     <div class="answer-links">
-      <button onclick="openImageModal('images/1050.png')">📱 YouTube QR</button>
+      <button onclick="showInlineModal('nback-guide-modal')" class="answer-link">🧠 Nバック課題ガイドを見る</button>
     </div>
   </div>
 </div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
@@ -1747,7 +1748,7 @@
     </div>
   </div>
   <div class="faq-answer" id="answer-faq-99">
-    <div class="answer-content">スターは全ユーザーが利用できる標準機能。八王子市では別途、てくポ登録者向けに「てくポポイント」を導入しており、スターとてくポポイントは別物で、付与ルールも異なる。</div>
+    <div class="answer-content">スターは全ユーザーが利用できる標準機能。200スターで認知機能テストチケット１枚と交換できます。八王子市では別途、てくポ登録者向けに「てくポポイント」を導入しており、スターとてくポポイントは別物で、付与ルールも異なる。</div>
   </div>
 </div><div class="faq-item" data-category="全般・各種設定・ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-100')">
@@ -1758,7 +1759,10 @@
     </div>
   </div>
   <div class="faq-answer" id="answer-faq-100">
-    <div class="answer-content">PayPay公式サイト（外部リンク）をご覧ください。</div>
+    <div class="answer-content">PayPay公式サイト参照。PayPayアプリのインストールとアカウント登録が必要。銀行口座・本人確認・チャージは不要。</div>
+    <div class="answer-links">
+      <a href="https://paypay.ne.jp/guide/start/" target="_blank" class="answer-link">🔗 PayPay公式サイト</a>
+    </div>
   </div>
 </div><div class="faq-item" data-category="全般・各種設定・ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-101')">
@@ -1769,7 +1773,7 @@
     </div>
   </div>
   <div class="faq-answer" id="answer-faq-101">
-    <div class="answer-content">回答内容が設定されていません</div>
+    <div class="answer-content">ポイント交換は数秒で完了します。表示されない場合は、PayPayアプリの「支払う」をタップし、「PayPayポイント」にチェックが入っているか確認してください。</div>
     <div class="answer-links">
       <button onclick="openImageModal('images/1102.png')" class="answer-link">📷 参考手順</button>
     </div>
@@ -1897,7 +1901,7 @@
     </div>
   </div>
   <div class="faq-answer" id="answer-faq-112">
-    <div class="answer-content">アプリホーム画面「てくポ情報」＞「てくポ情報」（画面下部）から確認可能。ポイント履歴は削除できず、履歴によるデータ容量増加もない。</div>
+    <div class="answer-content">アプリホーム画面「てくポ情報」＞「ｐてくポ情報」（画面下部）から確認可能。ポイント履歴は削除できず、サーバー上にデータがあるためスマホ容量増加の心配はない。</div>
   </div>
 </div><div class="faq-item" data-category="全般・各種設定・ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-113')">
@@ -2022,9 +2026,247 @@
     <div class="answer-content">退会は「八王子市メニュー」＞「八王子市からのお知らせ」内の退会申請フォームから行う。アンインストールでは退会とならず、退会処理完了には最大1ヶ月程度かかる場合有。</div>
   </div>
 </div>
+<div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-123')">
+    <div class="faq-question-text">まちえみとは何ですか？ <span style="color: #999; font-size: 0.8em;">#2001</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-123')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-123">
+    <div class="answer-content">まちえみは、地域マップで八王子市内の対象店舗やイベント情報を確認できる機能です。対象店舗では「はっちお〜じくん」と脳トレ対戦をしてボーナスポイントを獲得したり、イベントの予約・参加ができます。</div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-124')">
+    <div class="faq-question-text">まちえみはどこから使えますか？ <span style="color: #999; font-size: 0.8em;">#2002</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-124')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-124">
+    <div class="answer-content">アプリホーム画面の「近くの楽しい情報」ボタンを選択してください。</div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-126')">
+    <div class="faq-question-text">地域マップが表示されません / 真っ白です <span style="color: #999; font-size: 0.8em;">#2004</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-126')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-126">
+    <div class="answer-content">標準ブラウザがChromeであることを確認のうえ、Playストアで「Chrome」と「Android System WebView」を更新してください（BASIO・Galaxy端末は本体設定も必要な場合があります）。</div>
+    <div class="answer-links">
+      <button onclick="openImageModal('images/1051.png')" class="answer-link">📷 参考画像</button>
+    </div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-127')">
+    <div class="faq-question-text">地図に自分の現在地が表示されません <span style="color: #999; font-size: 0.8em;">#2005</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-127')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-127">
+    <div class="answer-content">スマートフォンの位置情報（GPS）がオンになっているか確認してください。位置情報の設定方法：スマートフォン本体の設定＞アプリ情報＞脳にいいアプリ＞権限＞位置情報＞アプリの使用中のみ許可を選択してください。</div>
+    <div class="answer-links">
+      <button onclick="openImageModal('images/1010.png')" class="answer-link">📷 参考画像1</button>
+      <button onclick="openImageModal('images/2005b.png')" class="answer-link">📷 参考画像2</button>
+    </div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-128')">
+    <div class="faq-question-text">地図上のマーク（アイコン）の種類と意味を教えてください <span style="color: #999; font-size: 0.8em;">#2006</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-128')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-128">
+    <div class="answer-content">地域マップには以下のマークが表示されます。<br><br>ⓅPマーク：健康ポイントが利用できるお店です。<br>🚩旗マーク：自治体イベントです。どなたでもご参加いただけます。<br>🎈風船マーク：企業イベントです。イベント情報から予約することでご参加いただけます。<br>🏠お店マーク：紹介店舗です。本ポイント施策に協賛いただいている店舗となり、特別対戦が可能なお店です。</div>
+    <div class="answer-links">
+      <button onclick="openImageModal('images/2006.png')" class="answer-link">📷 参考画像</button>
+    </div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-129')">
+    <div class="faq-question-text">地図上に表示されている「はっちお〜じくん」は何ですか？ <span style="color: #999; font-size: 0.8em;">#2007</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-129')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-129">
+    <div class="answer-content">はっちお〜じくんは、対象店舗で脳トレ対戦ができる特別キャラクターです。店舗の近くに行き、円の中に入ることで、はっちお〜じくんと脳トレ対戦をして勝利すると、ボーナスポイントが獲得できます（1日1回限定）。</div>
+    <div class="answer-links">
+      <button onclick="openImageModal('images/2007.png')" class="answer-link">📷 参考画像</button>
+    </div>
+  </div>
+</div>
+<div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-130')">
+    <div class="faq-question-text">はっちお〜じくんと対戦するにはどうすればいいですか？ <span style="color: #999; font-size: 0.8em;">#2008</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-130')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-130">
+    <div class="answer-content">地域マップで、はっちお〜じくんが表示されている場所に行ってください。円の中でキャラクターマークをタップし、「特別対戦をする」ボタンを押すと脳トレ対戦が始まります。</div>
+    <div class="answer-links">
+      <button onclick="openImageModal('images/2008.png')" class="answer-link">📷 参考画像</button>
+    </div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-131')">
+    <div class="faq-question-text">「特別対戦をする」ボタンが押せません <span style="color: #999; font-size: 0.8em;">#2009</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-131')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-131">
+    <div class="answer-content">地図上の右下にある更新ボタンを押してください。</div>
+    <div class="answer-links">
+      <button onclick="openImageModal('images/2010.png')" class="answer-link">📷 参考画像</button>
+    </div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-133')">
+    <div class="faq-question-text">はっちお〜じくんとの対戦は1日何回できますか？ <span style="color: #999; font-size: 0.8em;">#2011</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-133')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-133">
+    <div class="answer-content">1日1回限定です。勝利すると、その店舗ではその日は対戦できません。翌日以降に再度挑戦してください。</div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-135')">
+    <div class="faq-question-text">はっちお〜じくんに勝つと何ポイントもらえますか？ <span style="color: #999; font-size: 0.8em;">#2013</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-135')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-135">
+    <div class="answer-content">はっちお〜じくんとの特別対戦に勝利すると、5ポイント獲得できます（1日1回限定）。</div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-136')">
+    <div class="faq-question-text">はっちお〜じくんが出現する時間はどこで確認できますか？ <span style="color: #999; font-size: 0.8em;">#2014</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-136')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-136">
+    <div class="answer-content">地図上のはっちお〜じくんマークをタップすると、情報ウィンドウに「特別対戦時間」が表示されます。出現中の場合は「出現中（〜終了時刻）」、出現前の場合は次回の出現時間が表示されます。</div>
+    <div class="answer-links">
+      <button onclick="openImageModal('images/2014.png')" class="answer-link">📷 参考画像</button>
+    </div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-140')">
+    <div class="faq-question-text">イベントの予約方法を教えてください <span style="color: #999; font-size: 0.8em;">#2018</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-140')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-140">
+    <div class="answer-content">地図上の風船マークをタップ＞「詳しく見る」ボタンを押す＞イベント詳細画面で「予約する」ボタンを押す＞確認画面で再度「予約する」ボタンを押すと予約完了です。</div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-141')">
+    <div class="faq-question-text">「予約不可」と表示されてイベントが予約できません <span style="color: #999; font-size: 0.8em;">#2019</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-141')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-141">
+    <div class="answer-content">以下の理由が考えられます。イベントの開催日時が過ぎています、定員に達しています（「満席（予約不可）」と表示されます）、イベントの予約受付期間外です。</div>
+  </div>
+</div>
+<div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-142')">
+    <div class="faq-question-text">予約したイベントをキャンセルしたいです <span style="color: #999; font-size: 0.8em;">#2020</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-142')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-142">
+    <div class="answer-content">地図上の右上メニューから、自分が登録しているイベントを確認し、キャンセルできます。</div>
+  </div>
+</div>
+<div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-143')">
+    <div class="faq-question-text">イベントに参加したらポイントはいつもらえますか？ <span style="color: #999; font-size: 0.8em;">#2021</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-143')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-143">
+    <div class="answer-content">イベント会場で、アプリのQRコード読み取り機能を使ってイベント専用QRコードを読み込むと、その場でポイントが付与されます。</div>
+  </div>
+</div><div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-144')">
+    <div class="faq-question-text">イベントの詳細情報はどこで見れますか？ <span style="color: #999; font-size: 0.8em;">#2022</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-144')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-144">
+    <div class="answer-content">地図上のイベントマーク（風船または旗）をタップし、表示される情報ウィンドウ内の「詳しく見る」ボタンを押すと、イベントの詳細情報が確認できます。</div>
+  </div>
+</div>
+<div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-148')">
+    <div class="faq-question-text">はっちお〜じくんがいません / 表示されません <span style="color: #999; font-size: 0.8em;">#2026</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-148')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-148">
+    <div class="answer-content">はっちお〜じくんはめったに出現しません。みつけたらラッキーです。</div>
+  </div>
+</div>
+<div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-149')">
+    <div class="faq-question-text">はっちお〜じくんに負けたらどうなりますか？ <span style="color: #999; font-size: 0.8em;">#2027</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-149')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-149">
+    <div class="answer-content">負けても勝つまで何度でも挑戦できます。ただし、挑戦するには店舗の円の中にいる必要があります。勝利するとポイントが獲得でき、その日はその店舗での対戦は終了となります。</div>
+  </div>
+</div>
+<div class="faq-item" data-category="まちえみ">
+  <div class="faq-question" onclick="toggleFAQ('faq-150')">
+    <div class="faq-question-text">家マークの店舗でてくポポイントは使えますか？ <span style="color: #999; font-size: 0.8em;">#2028</span></div>
+    <div style="display: flex; align-items: center;">
+      <button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('faq-150')" title="お気に入りに登録">お気に入り登録</button>
+      <span class="faq-icon">▼</span>
+    </div>
+  </div>
+  <div class="faq-answer" id="answer-faq-150">
+    <div class="answer-content">家マーク（はっちお〜じくん出現店舗）ではポイントは使えません。ただし、はっちお〜じくんとの対戦に勝利すると5ポイント獲得できます。ポイントが使えるのはPマークの店舗のみです。貯めたポイントはPayPayポイントに交換するか、Pマークの店舗で使えます。</div>
+  </div>
+</div>
         </div>
     </div>
-    
+
     <div id="imageModal">
         <span class="close" onclick="closeImageModal()">&times;</span>
         <img class="modal-content" id="modalImage">
@@ -2907,6 +3149,58 @@
 
             <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 8px; margin-top: 20px; text-align: center;">
                 <p style="color: #856404; margin: 0; font-weight: 600;">💡 何度も練習すれば、本番のパズルも時間内に解けるようになります！</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Nバック課題ガイドモーダル -->
+    <div id="nback-guide-modal" class="inline-modal" style="display: none; background: white; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.2); margin: 20px auto; overflow: hidden; max-width: 800px;">
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; position: relative;">
+            <h2 style="color: white;">🧠 Nバック課題ガイド</h2>
+            <button onclick="hideInlineModal('nback-guide-modal')" style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
+            <p style="margin: 5px 0 0 0; font-size: 0.9em; opacity: 0.9; color: white;">動画で学んで、練習で慣れよう！</p>
+        </div>
+        <div style="padding: 25px;">
+
+            <!-- YouTube解説動画 -->
+            <div style="background: linear-gradient(135deg, #ffe6e6, #ffcccc); border: 3px solid #667eea; border-radius: 15px; padding: 25px; margin-bottom: 20px;">
+                <h3 style="color: #667eea; font-weight: 700; font-size: 1.2rem; margin-bottom: 15px;">📺 YouTube解説動画</h3>
+                <p style="color: #555; line-height: 1.6; margin-bottom: 15px;">Nバック課題の解き方を動画で分かりやすく説明しています。</p>
+
+                <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+                    <h4 style="color: #667eea; margin-bottom: 15px; font-weight: 600;">YouTube解説動画のQRコード</h4>
+
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                        <div style="background: #f0f0f0; padding: 15px; border-radius: 10px; max-width: 300px;">
+                            <img src="images/1050.png" alt="YouTube解説動画QRコード" style="max-width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+
+                        <p style="color: #666; font-size: 0.95rem; margin: 0;">スマホのカメラでQRコードをかざすと、YouTube動画が開きます</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 練習ページ -->
+            <div style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9); border: 3px solid #4CAF50; border-radius: 15px; padding: 25px; margin-bottom: 20px;">
+                <h3 style="color: #2e7d32; font-weight: 700; font-size: 1.2rem; margin-bottom: 15px;">🎯 練習ページで実践</h3>
+                <p style="color: #555; line-height: 1.6; margin-bottom: 15px;">動画で学んだら、練習ページで実際にやってみましょう！</p>
+
+                <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+                    <h4 style="color: #4CAF50; margin-bottom: 15px; font-weight: 600;">練習ページのQRコード</h4>
+
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                        <div style="background: #f0f0f0; padding: 15px; border-radius: 10px; max-width: 300px;">
+                            <img src="images/1050_practice.png" alt="Nバック課題練習ページQRコード" style="max-width: 100%; height: auto; border-radius: 8px;">
+                        </div>
+
+                        <p style="color: #666; font-size: 0.95rem; margin: 0;">スマホのカメラでQRコードをかざすと、練習ページが開きます</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 8px; margin-top: 20px; text-align: center;">
+                <p style="color: #856404; margin: 0; font-weight: 600;">💡 何度も練習すれば、本番でもスムーズに解けるようになります！</p>
             </div>
 
         </div>
