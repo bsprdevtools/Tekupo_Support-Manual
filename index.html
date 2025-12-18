@@ -487,6 +487,127 @@
                 padding: 3px;
             }
         }
+
+        /* 症状から探すセクション - エンタープライズデザイン */
+        .symptom-filter-section {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .symptom-filter-title {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #1a365d;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #2c5aa0;
+            letter-spacing: 0.5px;
+            -webkit-font-smoothing: antialiased;
+        }
+        .symptom-filter-subtitle {
+            color: #718096;
+            font-size: 12px;
+            margin-bottom: 14px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .symptom-tags {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .symptom-tag {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: linear-gradient(180deg, #f0f4f8 0%, #d9e2ec 100%);
+            border: 1px solid #9fb3c8;
+            border-radius: 5px;
+            padding: 12px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #243b53;
+            cursor: pointer;
+            transition: all 0.12s ease;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.4;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 1px 0 rgba(255,255,255,0.6) inset;
+            border-bottom: 3px solid #829ab1;
+        }
+        .symptom-tag:hover {
+            background: linear-gradient(180deg, #e3e9f0 0%, #c9d6e3 100%);
+            border-color: #627d98;
+            color: #102a43;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.6) inset;
+        }
+        .symptom-tag:active {
+            background: linear-gradient(180deg, #d9e2ec 0%, #bcccdc 100%);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1) inset;
+            border-bottom: 1px solid #829ab1;
+            transform: translateY(2px);
+        }
+        .symptom-tag.active {
+            background: linear-gradient(180deg, #2680c2 0%, #1e5a8a 100%);
+            color: #ffffff;
+            border-color: #0d3258;
+            border-bottom: 3px solid #0d3258;
+            font-weight: 700;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.15) inset;
+        }
+        .symptom-clear-btn {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 2px;
+            padding: 8px 16px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #718096;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+        .symptom-clear-btn:hover {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+            color: #4a5568;
+        }
+        .symptom-result-info {
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: #f7fafc;
+            border-radius: 2px;
+            color: #2c5aa0;
+            font-size: 13px;
+            font-weight: 500;
+            display: none;
+            border: 1px solid #e2e8f0;
+            border-left: 3px solid #2c5aa0;
+            align-items: center;
+            justify-content: space-between;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .symptom-result-info.show {
+            display: flex;
+        }
+        @media (max-width: 480px) {
+            .symptom-tags {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .symptom-tag {
+                padding: 10px 6px;
+                font-size: 12px;
+                min-height: 42px;
+            }
+        }
     </style>
 
     <!-- PWA Configuration -->
@@ -502,7 +623,7 @@
     <div class="container">
         <div class="header">
             <h1>脳にいいアプリ FAQ</h1>
-            <div class="subtitle">よくあるご質問</div>
+            <div class="subtitle">よくあるご質問 <span style="font-size: 11px; color: #666666; margin-left: 8px;">ver.2.0</span></div>
             <div class="search-container">
                 <div class="search-icon">🔍</div>
                 <input type="text" class="search-box" placeholder="質問や回答を検索..." oninput="searchFAQ(this.value)">
@@ -560,6 +681,27 @@
             </div>
         </div>
 
+        <!-- 症状から探すセクション -->
+        <div class="symptom-filter-section">
+            <div class="symptom-filter-title">症状から探す</div>
+            <div class="symptom-filter-subtitle">お客様の状況に近い項目を選択してください</div>
+            <div class="symptom-tags">
+                <button class="symptom-tag" onclick="filterBySymptom('画面が白い', this)">画面が白い</button>
+                <button class="symptom-tag" onclick="filterBySymptom('動かない', this)">動かない</button>
+                <button class="symptom-tag" onclick="filterBySymptom('エラー', this)">エラー</button>
+                <button class="symptom-tag" onclick="filterBySymptom('表示されない', this)">表示されない</button>
+                <button class="symptom-tag" onclick="filterBySymptom('進めない', this)">進めない</button>
+                <button class="symptom-tag" onclick="filterBySymptom('設定', this)">設定</button>
+                <button class="symptom-tag" onclick="filterBySymptom('歩数', this)">歩数</button>
+                <button class="symptom-tag" onclick="filterBySymptom('ポイント', this)">ポイント</button>
+                <button class="symptom-tag" onclick="filterBySymptom('脳トレ', this)">脳トレ</button>
+            </div>
+            <div class="symptom-result-info" id="symptomResultInfo">
+                <span class="result-text"></span>
+                <button class="symptom-clear-btn" onclick="clearSymptomFilter()">解除</button>
+            </div>
+        </div>
+
         <!-- モーダル表示エリア（タブの上に配置） -->
         <div id="modal-area" style="margin-bottom: 20px;"></div>
 
@@ -589,7 +731,7 @@
         </div>
         
         <div class="faq-container">
-<div class="faq-item" data-category="初期設定・申し込み">
+<div class="faq-item" data-category="初期設定・申し込み" data-symptoms="設定">
   <div class="faq-question" onclick="toggleFAQ('faq-0')">
     <div class="faq-question-text">パスワードの入力を求められました。（Googleアカウント・Appleアカウント（旧AppleID）） <span style="color: #999; font-size: 0.8em;">#1001</span></div>
     <div style="display: flex; align-items: center;">
@@ -604,7 +746,7 @@
       <a href="https://support.apple.com/apple-id/" target="_blank" class="answer-link">🍎 Apple Help</a>
     </div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="設定">
   <div class="faq-question" onclick="toggleFAQ('faq-1')">
     <div class="faq-question-text">Playストアを開くと「購入確認が設定されていません」と表示され、パスワードの入力か生体認証の設定を求められました。 <span style="color: #999; font-size: 0.8em;">#1002</span></div>
     <div style="display: flex; align-items: center;">
@@ -618,7 +760,7 @@
       <a href="https://support.google.com/googleplay/answer/1626831" target="_blank" class="answer-link">🔍 Google Help</a>
     </div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="設定">
   <div class="faq-question" onclick="toggleFAQ('faq-2')">
     <div class="faq-question-text">アプリインストール時に支払い方法の設定を求められました。 <span style="color: #999; font-size: 0.8em;">#1003</span></div>
     <div style="display: flex; align-items: center;">
@@ -632,7 +774,7 @@
       <button onclick="openImageModal('images/1003.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="表示されない">
   <div class="faq-question" onclick="toggleFAQ('faq-3')">
     <div class="faq-question-text">スマホのバージョンが古くてアプリが見つからない・インストールできない <span style="color: #999; font-size: 0.8em;">#1004</span></div>
     <div style="display: flex; align-items: center;">
@@ -643,7 +785,7 @@
   <div class="faq-answer" id="answer-faq-3">
     <div class="answer-content">端末のAndroid・iOSのバージョンが古く、対応していない場合は検索結果に表示されません。令和７年（2025年）４月１日現在、Android8.0及びiOS13以前のバージョンには非対応となっています。</div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="動かない">
   <div class="faq-question" onclick="toggleFAQ('faq-4')">
     <div class="faq-question-text">アプリがダウンロードできず、ぐるぐるしたまま止まってしまう <span style="color: #999; font-size: 0.8em;">#1005</span></div>
     <div style="display: flex; align-items: center;">
@@ -654,7 +796,7 @@
   <div class="faq-answer" id="answer-faq-4">
     <div class="answer-content">1. Wi-Fiなど安定した通信に切り替える 2. スマホを再起動 3. 時刻設定と空き容量の確認 4. システムアップデート確認</div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="エラー,進めない">
   <div class="faq-question" onclick="toggleFAQ('faq-5')">
     <div class="faq-question-text">Android端末で「開発者モードを検知しました」と表示されて先に進めない <span style="color: #999; font-size: 0.8em;">#1006</span></div>
     <div style="display: flex; align-items: center;">
@@ -679,7 +821,7 @@
   <div class="faq-answer" id="answer-faq-6">
     <div class="answer-content">脳トレゲームの対戦相手の名前や、歩数ランキング等に使用されます。本名での登録はご遠慮下さい。<br>なお、ニックネームはいつでも変更できます。</div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="表示されない">
   <div class="faq-question" onclick="toggleFAQ('faq-7')">
     <div class="faq-question-text">ホーム画面に「八王子市メニュー」が表示されません。 <span style="color: #999; font-size: 0.8em;">#1008</span></div>
     <div style="display: flex; align-items: center;">
@@ -693,7 +835,7 @@
       <button onclick="openImageModal('images/1008.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="動かない,進めない">
   <div class="faq-question" onclick="toggleFAQ('faq-8')">
     <div class="faq-question-text">AIひつじの説明が進んでいきません。 <span style="color: #999; font-size: 0.8em;">#1009</span></div>
     <div style="display: flex; align-items: center;">
@@ -707,7 +849,7 @@
       <button onclick="openImageModal('images/1009.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="設定">
   <div class="faq-question" onclick="toggleFAQ('faq-9')">
     <div class="faq-question-text">位置情報の許可を選択しませんでした。 <span style="color: #999; font-size: 0.8em;">#1010</span></div>
     <div style="display: flex; align-items: center;">
@@ -721,7 +863,7 @@
       <button onclick="openImageModal('images/1010.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="設定">
   <div class="faq-question" onclick="toggleFAQ('faq-10')">
     <div class="faq-question-text">権限「身体活動」の許可を選択しませんでした。 <span style="color: #999; font-size: 0.8em;">#1011</span></div>
     <div style="display: flex; align-items: center;">
@@ -735,7 +877,7 @@
       <button onclick="openImageModal('images/1011.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-11')">
     <div class="faq-question-text">アプリをインストールしても0ポイントのままポイントがたまりません。 <span style="color: #999; font-size: 0.8em;">#1012</span></div>
     <div style="display: flex; align-items: center;">
@@ -746,7 +888,7 @@
   <div class="faq-answer" id="answer-faq-11">
     <div class="answer-content">てくポのポイントをためるには、アプリをインストールした上で、てくポ申込を行い、市が承認する必要があります。アプリホーム画面の「八王子市メニュー」からてくポへの申し込みを行ってください。</div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="進めない">
   <div class="faq-question" onclick="toggleFAQ('faq-12')">
     <div class="faq-question-text">本人確認書類の写真を撮ったが、先に進めない <span style="color: #999; font-size: 0.8em;">#1013</span></div>
     <div style="display: flex; align-items: center;">
@@ -771,7 +913,7 @@
   <div class="faq-answer" id="answer-faq-13">
     <div class="answer-content">カメラを選ぶと、その場で書類の写真が撮れます。ファイルを選ぶと、スマホに保存した画像を使えます。ぼやけていたら撮り直しになるので、できればカメラで撮影するのがおすすめです。</div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="エラー">
   <div class="faq-question" onclick="toggleFAQ('faq-14')">
     <div class="faq-question-text">本人確認書類の写真を撮りましたが、エラーになります。 <span style="color: #999; font-size: 0.8em;">#1015</span></div>
     <div style="display: flex; align-items: center;">
@@ -785,7 +927,7 @@
       <button onclick="openImageModal('images/1015.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="進めない">
   <div class="faq-question" onclick="toggleFAQ('faq-15')">
     <div class="faq-question-text">本人確認書類の写真を撮りましたが、撮影されたが画像が表示されるだけで先に進めません。 <span style="color: #999; font-size: 0.8em;">#1016</span></div>
     <div style="display: flex; align-items: center;">
@@ -799,7 +941,7 @@
       <button onclick="openImageModal('images/1016.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="進めない">
   <div class="faq-question" onclick="toggleFAQ('faq-16')">
     <div class="faq-question-text">「次へ」のオレンジ色ボタンが押せません。 <span style="color: #999; font-size: 0.8em;">#1017</span></div>
     <div style="display: flex; align-items: center;">
@@ -835,7 +977,7 @@
   <div class="faq-answer" id="answer-faq-18">
     <div class="answer-content">使用できません。マイナンバーカード等をご用意ください。</div>
   </div>
-</div><div class="faq-item" data-category="初期設定・申し込み">
+</div><div class="faq-item" data-category="初期設定・申し込み" data-symptoms="ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-19')">
     <div class="faq-question-text">てくポに申し込みしたのにポイントがたまりません。 <span style="color: #999; font-size: 0.8em;">#1020</span></div>
     <div style="display: flex; align-items: center;">
@@ -882,7 +1024,7 @@
   <div class="faq-answer" id="answer-faq-22">
     <div class="answer-content">申込完了後は内容の確認や修正はできません。不備があれば高齢者いきいき課から連絡があります。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="歩数">
   <div class="faq-question" onclick="toggleFAQ('faq-23')">
     <div class="faq-question-text">歩数が極端に少ないまたは0歩から動きません。 <span style="color: #999; font-size: 0.8em;">#1024</span></div>
     <div style="display: flex; align-items: center;">
@@ -896,7 +1038,7 @@
       <button onclick="openHtmlModal('battery-optimizer-simple.html', event)" class="answer-link">📖 最適化設定手順を見る</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="歩数">
   <div class="faq-question" onclick="toggleFAQ('faq-24')">
     <div class="faq-question-text">万歩計や他のアプリと同じ歩数になりません。 <span style="color: #999; font-size: 0.8em;">#1025</span></div>
     <div style="display: flex; align-items: center;">
@@ -976,7 +1118,7 @@
   <div class="faq-answer" id="answer-faq-30">
     <div class="answer-content">スマートフォンを身につけて歩いた場合はカウントされます。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="歩数">
   <div class="faq-question" onclick="toggleFAQ('faq-31')">
     <div class="faq-question-text">歩行ペースが急に半分以下に表示されます。 <span style="color: #999; font-size: 0.8em;">#1032</span></div>
     <div style="display: flex; align-items: center;">
@@ -998,7 +1140,7 @@
   <div class="faq-answer" id="answer-faq-32">
     <div class="answer-content">オフライン等機内モードでも歩数はカウントします。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="歩数">
   <div class="faq-question" onclick="toggleFAQ('faq-33')">
     <div class="faq-question-text">スマートフォンを機種変更してから歩数計測数が少ないです。 <span style="color: #999; font-size: 0.8em;">#1034</span></div>
     <div style="display: flex; align-items: center;">
@@ -1056,7 +1198,7 @@
   <div class="faq-answer" id="answer-faq-37">
     <div class="answer-content">コースは現時点で追加予定はありませんが、制覇したコースには何度でもチャレンジできます。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="動かない,歩数">
   <div class="faq-question" onclick="toggleFAQ('faq-38')">
     <div class="faq-question-text">ウォーキングチャレンジが進みません。 <span style="color: #999; font-size: 0.8em;">#1039</span></div>
     <div style="display: flex; align-items: center;">
@@ -1067,7 +1209,7 @@
   <div class="faq-answer" id="answer-faq-38">
     <div class="answer-content">端末の再起動をお試しいただき、それでも改善しない場合はアプリ内のお問合せからご連絡ください。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="歩数">
   <div class="faq-question" onclick="toggleFAQ('faq-39')">
     <div class="faq-question-text">歩数画面の歩数と歩数ランキングの歩数が違うのはなぜですか？ <span style="color: #999; font-size: 0.8em;">#1040</span></div>
     <div style="display: flex; align-items: center;">
@@ -1078,7 +1220,7 @@
   <div class="faq-answer" id="answer-faq-39">
     <div class="answer-content">歩数ランキングへの反映には多少時間がかかる場合がございます。反映には以下の流れをご確認ください。<br><br>1.歩く<br>2.アプリを開く（歩数データがサーバーに送信されます）<br><br><strong>重要なポイント</strong><br>歩いた後に必ずアプリを開いてください。アプリを開くことで歩数データがサーバーに送られ、その後ランキングに反映されます。アプリを開かないと歩数がサーバーに送られないため、ランキングに反映されません。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-40')">
     <div class="faq-question-text">この脳トレは、認知症予防に効果はありますか？ <span style="color: #999; font-size: 0.8em;">#1041</span></div>
     <div style="display: flex; align-items: center;">
@@ -1089,7 +1231,7 @@
   <div class="faq-answer" id="answer-faq-40">
     <div class="answer-content">脳トレは米国国立衛生研究所や米ウィスコンシン大学の研究結果を参考に開発されています。また、国立研究開発法人 国立長寿医療研究センター「認知症予防についての調査研究事業結果報告書」（2017年）では認知症予防活動は運動や認知トレーニングを複合したアプローチの方が、単独の予防活動より有効という結論が記載されており、脳にいいアプリは運動・脳トレ・食事の複合的な活動ができるアプリとなっています。詳しくは脳にいいアプリ公式ホームページをご確認ください。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-41')">
     <div class="faq-question-text">脳トレの目標回数を変更できますか？ <span style="color: #999; font-size: 0.8em;">#1042</span></div>
     <div style="display: flex; align-items: center;">
@@ -1100,7 +1242,7 @@
   <div class="faq-answer" id="answer-faq-41">
     <div class="answer-content">科学的な研究結果に基づき、年代と性別で自動的に設定しているため、変更はできません。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-42')">
     <div class="faq-question-text">対戦するのはなぜですか？ <span style="color: #999; font-size: 0.8em;">#1043</span></div>
     <div style="display: flex; align-items: center;">
@@ -1111,7 +1253,7 @@
   <div class="faq-answer" id="answer-faq-42">
     <div class="answer-content">認知機能向上には人との繋がりが重要とされているため、誰かと一緒に楽しめるよう開発されており、対戦はリアルタイムではなく他の利用者のクリアタイムや正答率を競う形式です。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-43')">
     <div class="faq-question-text">番付とは何ですか？昇段と降格の基準がわかりません。 <span style="color: #999; font-size: 0.8em;">#1044</span></div>
     <div style="display: flex; align-items: center;">
@@ -1122,7 +1264,7 @@
   <div class="faq-answer" id="answer-faq-43">
     <div class="answer-content">脳トレのランク（番付）は、回答の正確さや速さに応じて変動します。対戦の勝ち負けは関係なく、過去の成績も考慮されます。たとえ負けても素早く正確に答えていれば昇格することがあり、逆に勝っても誤答や時間のかかりすぎがあると降格することがあります。番付が上がると問題の難易度も上がります。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-44')">
     <div class="faq-question-text">脳トレ対戦は誰と戦っているのですか？リアルタイムで対戦しているのですか？ <span style="color: #999; font-size: 0.8em;">#1045</span></div>
     <div style="display: flex; align-items: center;">
@@ -1133,7 +1275,7 @@
   <div class="faq-answer" id="answer-faq-44">
     <div class="answer-content">脳トレでは、他のアプリ利用者が過去にクリアしたときの「タイム」や「正答率」と対戦します。リアルタイムで他の人と同時にプレイするわけではなく、記録された成績との勝負になります。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-45')">
     <div class="faq-question-text">脳トレゲーム終了時の「クリア」と「最高」の意味がわかりません。 <span style="color: #999; font-size: 0.8em;">#1046</span></div>
     <div style="display: flex; align-items: center;">
@@ -1144,7 +1286,7 @@
   <div class="faq-answer" id="answer-faq-45">
     <div class="answer-content">「クリア」は、今回の脳トレを解き終えるまでにかかった時間を示します。「最高」は、現在の番付においてご自身がこれまでに記録した最も早いクリアタイムを表しています。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-46')">
     <div class="faq-question-text">脳力図とは何ですか？「高次」という項目の意味は何ですか？ <span style="color: #999; font-size: 0.8em;">#1047</span></div>
     <div style="display: flex; align-items: center;">
@@ -1155,7 +1297,7 @@
   <div class="faq-answer" id="answer-faq-46">
     <div class="answer-content">脳力図は、統計的な情報から各脳力を測定します。高次力は、主に空間や時間に対する判断・注意・問題解決力などを表します。脳にいいアプリでは、正確にタップする事や、パズル等をより少ないタップ数で早く正解することで、高次力が高まります。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-47')">
     <div class="faq-question-text">スライドパズルの動かし方がわかりません。 <span style="color: #999; font-size: 0.8em;">#1048</span></div>
     <div style="display: flex; align-items: center;">
@@ -1169,7 +1311,7 @@
       <button onclick="showInlineModal('slide-puzzle-guide-modal')" class="answer-link">🧩 スライドパズル練習ガイドを見る</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-48')">
     <div class="faq-question-text">間違いさがしの解き方がわかりません。 <span style="color: #999; font-size: 0.8em;">#1049</span></div>
     <div style="display: flex; align-items: center;">
@@ -1183,7 +1325,7 @@
       <button onclick="openImageModal('images/1049.png')">📱 YouTube QR</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-49')">
     <div class="faq-question-text">Nバック課題の解き方がわかりません。 <span style="color: #999; font-size: 0.8em;">#1050</span></div>
     <div style="display: flex; align-items: center;">
@@ -1197,7 +1339,7 @@
       <button onclick="showInlineModal('nback-guide-modal')" class="answer-link">🧠 Nバック課題ガイドを見る</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="表示されない">
   <div class="faq-question" onclick="toggleFAQ('faq-50')">
     <div class="faq-question-text">画面が極端に小さくなります。 <span style="color: #999; font-size: 0.8em;">#1051</span></div>
     <div style="display: flex; align-items: center;">
@@ -1206,12 +1348,12 @@
     </div>
   </div>
   <div class="faq-answer" id="answer-faq-50">
-    <div class="answer-content">Playストアの「アップデート可能なアプリ一覧」から「Chrome」と「Android System WebView」を更新してください。BASIOやGalaxy端末をご利用の方は、更新に加えて本体設定の変更が必要な場合があります</div>
+    <div class="answer-content">Chrome及びWebViewを更新してください。<span style="color: red; font-weight: bold;">更新方法がそれぞれ異なります。</span>WebView更新手順につきましては参考画像をご確認ください。</div>
     <div class="answer-links">
-      <button onclick="openImageModal('images/1051.png')" class="answer-link">📷 参考画像</button>
+      <button onclick="showInlineModal('chrome-modal')" class="answer-link">📷 対処手順を見る</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="動かない">
   <div class="faq-question" onclick="toggleFAQ('faq-51')">
     <div class="faq-question-text">途中でアプリが落ちて（閉じて）しまいます。 <span style="color: #999; font-size: 0.8em;">#1052</span></div>
     <div style="display: flex; align-items: center;">
@@ -1278,7 +1420,7 @@
       <button onclick="openImageModal('images/1056.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-57')">
     <div class="faq-question-text">脳トレで、3-0で勝ち、総合評価もSでしたが、番付が降格になってしまいました。 <span style="color: #999; font-size: 0.8em;">#1058</span></div>
     <div style="display: flex; align-items: center;">
@@ -1289,7 +1431,7 @@
   <div class="faq-answer" id="answer-faq-57">
     <div class="answer-content">番付の昇段や降格は、回答の速さ・正確さ・過去の成績によって決まり、対戦の勝ち負けは関係ありません。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-58')">
     <div class="faq-question-text">虫食い計算 （例）数字◯0(ゼロ)=0(ゼロ) ◯の中は×と÷どちらでも成り立つのに、÷を選ぶと間違いになってしまいます。 <span style="color: #999; font-size: 0.8em;">#1059</span></div>
     <div style="display: flex; align-items: center;">
@@ -1300,7 +1442,7 @@
   <div class="faq-answer" id="answer-faq-58">
     <div class="answer-content">「÷」の場合の答えは「計算不可」のため「×」が正解となります。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="脳トレ">
   <div class="faq-question" onclick="toggleFAQ('faq-59')">
     <div class="faq-question-text">記憶計算の仕組みがわかりません。 <span style="color: #999; font-size: 0.8em;">#1060</span></div>
     <div style="display: flex; align-items: center;">
@@ -1421,7 +1563,7 @@
   <div class="faq-answer" id="answer-faq-69">
     <div class="answer-content">食事の入力は当日分（0時～23時59分）のみで、過去の登録や修正はできません。</div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="表示されない">
   <div class="faq-question" onclick="toggleFAQ('faq-70')">
     <div class="faq-question-text">「QRコードを読む」を押してもカメラが起動しません。 <span style="color: #999; font-size: 0.8em;">#1071</span></div>
     <div style="display: flex; align-items: center;">
@@ -1435,7 +1577,7 @@
       <button onclick="openImageModal('images/1071.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
+</div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面" data-symptoms="画面が白い,表示されない">
   <div class="faq-question" onclick="toggleFAQ('faq-71')">
     <div class="faq-question-text">八王子市メニューを押しましたが、画面真っ白で見れません。 <span style="color: #999; font-size: 0.8em;">#1072</span></div>
     <div style="display: flex; align-items: center;">
@@ -1444,9 +1586,9 @@
     </div>
   </div>
   <div class="faq-answer" id="answer-faq-71">
-    <div class="answer-content">標準ブラウザがChromeであることを確認のうえ、Playストアで「Chrome」と「Android System WebView」を更新してください（BASIO・Galaxy端末は本体設定も必要な場合があります）。</div>
+    <div class="answer-content">Chrome及びWebViewを更新してください。<span style="color: red; font-weight: bold;">更新方法がそれぞれ異なります。</span>WebView更新手順につきましては参考画像をご確認ください。</div>
     <div class="answer-links">
-      <button onclick="openImageModal('images/1051.png')" class="answer-link">📷 参考画像</button>
+      <button onclick="showInlineModal('chrome-modal')" class="answer-link">📷 対処手順を見る</button>
     </div>
   </div>
 </div><div class="faq-item" data-category="歩数・脳トレ・食事・ホーム画面">
@@ -1846,7 +1988,7 @@
   <div class="faq-answer" id="answer-faq-104">
     <div class="answer-content">令和7年（2025年）4月1日現在、お店の検索機能はありません。お店一覧からお探しください。</div>
   </div>
-</div><div class="faq-item" data-category="全般・各種設定・ポイント">
+</div><div class="faq-item" data-category="全般・各種設定・ポイント" data-symptoms="ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-105')">
     <div class="faq-question-text">スターの数とてくポのポイント数が一致しません。 <span style="color: #999; font-size: 0.8em;">#1106</span></div>
     <div style="display: flex; align-items: center;">
@@ -1857,7 +1999,7 @@
   <div class="faq-answer" id="answer-faq-105">
     <div class="answer-content">スターは全ユーザーが利用できる標準機能。八王子市では別途、てくポ登録者向けに「てくポポイント」を導入しており、スターとてくポポイントは別物で、付与ルールも異なる。</div>
   </div>
-</div><div class="faq-item" data-category="全般・各種設定・ポイント">
+</div><div class="faq-item" data-category="全般・各種設定・ポイント" data-symptoms="エラー,ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-106')">
     <div class="faq-question-text">イベントQRコード読み取り後に携帯会社のポータルサイトやアプリのインストール画面に遷移し、ポイントが付与されません。 <span style="color: #999; font-size: 0.8em;">#1107</span></div>
     <div style="display: flex; align-items: center;">
@@ -1866,9 +2008,9 @@
     </div>
   </div>
   <div class="faq-answer" id="answer-faq-106">
-    <div class="answer-content">Playストアから利用可能なアップデートアプリ一覧から「Chrome」と「Android System WebView」を更新して下さい。<br>BASIO・Galaxy端末を使用されている方は、更新操作に加え本体で設定が必要な場合がございます。</div>
+    <div class="answer-content">Chrome及びWebViewを更新してください。<span style="color: red; font-weight: bold;">更新方法がそれぞれ異なります。</span>WebView更新手順につきましては参考画像をご確認ください。</div>
     <div class="answer-links">
-      <button onclick="openImageModal('images/1051.png')" class="answer-link">📷 対処手順</button>
+      <button onclick="showInlineModal('chrome-modal')" class="answer-link">📷 対処手順を見る</button>
       <button onclick="showInlineModal('qr-test-modal')" class="answer-link">📱 読み込み確認QRコード</button>
     </div>
   </div>
@@ -1883,7 +2025,7 @@
   <div class="faq-answer" id="answer-faq-107">
     <div class="answer-content">アプリホーム画面の「八王子市メニュー」や「てくポ情報」から確認できる。</div>
   </div>
-</div><div class="faq-item" data-category="全般・各種設定・ポイント">
+</div><div class="faq-item" data-category="全般・各種設定・ポイント" data-symptoms="ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-108')">
     <div class="faq-question-text">突然ポイントが0になりました。どうすればいいですか？ <span style="color: #999; font-size: 0.8em;">#1109</span></div>
     <div style="display: flex; align-items: center;">
@@ -1894,7 +2036,7 @@
   <div class="faq-answer" id="answer-faq-108">
     <div class="answer-content">機種変更後にデータ引継ぎが未完了の場合や、アプリアップデート時に再インストールを行った場合などが原因として考えられる。</div>
   </div>
-</div><div class="faq-item" data-category="全般・各種設定・ポイント">
+</div><div class="faq-item" data-category="全般・各種設定・ポイント" data-symptoms="ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-109')">
     <div class="faq-question-text">アプリをインストールしてもポイントが0のままです。 <span style="color: #999; font-size: 0.8em;">#1110</span></div>
     <div style="display: flex; align-items: center;">
@@ -1949,7 +2091,7 @@
   <div class="faq-answer" id="answer-faq-113">
     <div class="answer-content">てくポポイント自体に有効期限はないが、他サービスへ交換後は交換先事業者のルールが適用される。</div>
   </div>
-</div><div class="faq-item" data-category="全般・各種設定・ポイント">
+</div><div class="faq-item" data-category="全般・各種設定・ポイント" data-symptoms="ポイント">
   <div class="faq-question" onclick="toggleFAQ('faq-114')">
     <div class="faq-question-text">毎日歩数（脳トレ）の目標達成したのに、達成ボーナスポイントが付いていません。 <span style="color: #999; font-size: 0.8em;">#1115</span></div>
     <div style="display: flex; align-items: center;">
@@ -2083,7 +2225,7 @@
   <div class="faq-answer" id="answer-faq-124">
     <div class="answer-content">アプリホーム画面の「近くの楽しい情報」ボタンを選択してください。</div>
   </div>
-</div><div class="faq-item" data-category="まちえみ">
+</div><div class="faq-item" data-category="まちえみ" data-symptoms="画面が白い,表示されない">
   <div class="faq-question" onclick="toggleFAQ('faq-126')">
     <div class="faq-question-text">地域マップが表示されません / 真っ白です <span style="color: #999; font-size: 0.8em;">#2004</span></div>
     <div style="display: flex; align-items: center;">
@@ -2092,12 +2234,12 @@
     </div>
   </div>
   <div class="faq-answer" id="answer-faq-126">
-    <div class="answer-content">標準ブラウザがChromeであることを確認のうえ、Playストアで「Chrome」と「Android System WebView」を更新してください（BASIO・Galaxy端末は本体設定も必要な場合があります）。</div>
+    <div class="answer-content">Chrome及びWebViewを更新してください。<span style="color: red; font-weight: bold;">更新方法がそれぞれ異なります。</span>WebView更新手順につきましては参考画像をご確認ください。</div>
     <div class="answer-links">
-      <button onclick="openImageModal('images/1051.png')" class="answer-link">📷 参考画像</button>
+      <button onclick="showInlineModal('chrome-modal')" class="answer-link">📷 対処手順を見る</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="まちえみ">
+</div><div class="faq-item" data-category="まちえみ" data-symptoms="表示されない">
   <div class="faq-question" onclick="toggleFAQ('faq-127')">
     <div class="faq-question-text">地図に自分の現在地が表示されません <span style="color: #999; font-size: 0.8em;">#2005</span></div>
     <div style="display: flex; align-items: center;">
@@ -2155,7 +2297,7 @@
       <button onclick="openImageModal('images/2008.png')" class="answer-link">📷 参考画像</button>
     </div>
   </div>
-</div><div class="faq-item" data-category="まちえみ">
+</div><div class="faq-item" data-category="まちえみ" data-symptoms="進めない">
   <div class="faq-question" onclick="toggleFAQ('faq-131')">
     <div class="faq-question-text">「特別対戦をする」ボタンが押せません <span style="color: #999; font-size: 0.8em;">#2009</span></div>
     <div style="display: flex; align-items: center;">
@@ -2216,7 +2358,7 @@
   <div class="faq-answer" id="answer-faq-140">
     <div class="answer-content">地図上の風船マークをタップ＞「詳しく見る」ボタンを押す＞イベント詳細画面で「予約する」ボタンを押す＞確認画面で再度「予約する」ボタンを押すと予約完了です。</div>
   </div>
-</div><div class="faq-item" data-category="まちえみ">
+</div><div class="faq-item" data-category="まちえみ" data-symptoms="進めない">
   <div class="faq-question" onclick="toggleFAQ('faq-141')">
     <div class="faq-question-text">「予約不可」と表示されてイベントが予約できません <span style="color: #999; font-size: 0.8em;">#2019</span></div>
     <div style="display: flex; align-items: center;">
@@ -2263,7 +2405,7 @@
     <div class="answer-content">地図上のイベントマーク（風船または旗）をタップし、表示される情報ウィンドウ内の「詳しく見る」ボタンを押すと、イベントの詳細情報が確認できます。</div>
   </div>
 </div>
-<div class="faq-item" data-category="まちえみ">
+<div class="faq-item" data-category="まちえみ" data-symptoms="表示されない">
   <div class="faq-question" onclick="toggleFAQ('faq-148')">
     <div class="faq-question-text">はっちお〜じくんがいません / 表示されません <span style="color: #999; font-size: 0.8em;">#2026</span></div>
     <div style="display: flex; align-items: center;">
@@ -2618,53 +2760,130 @@
         </div>
     </div>
 
-    <div id="chrome-modal" class="inline-modal" style="display: none; background: white; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.2); margin: 20px auto; overflow: hidden; max-width: 800px;">
+    <div id="chrome-modal" class="inline-modal" style="display: none; background: white; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.2); margin: 20px auto; overflow: hidden; max-width: 600px;">
         <div style="background: linear-gradient(45deg, #4285f4, #34a853); color: white; padding: 20px; text-align: center; position: relative;">
-            <h2 style="color: white;">🖥️ Chrome設定・更新ガイド</h2>
-            <button onclick="hideInlineModal('chrome-modal')" style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
-            <p style="margin: 5px 0 0 0; font-size: 0.9em; opacity: 0.9; color: white;">画面表示崩れ解決手順</p>
+            <h2 style="color: white; font-size: 1.3rem; margin: 0;">🖥️ 画面表示トラブル解決ガイド</h2>
+            <button onclick="hideInlineModal('chrome-modal'); resetChromeWizard();" style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
         </div>
-        <div style="padding: 25px;">
-            <!-- Chrome設定手順 -->
-            <div style="margin: 15px 0; padding: 15px; background: #e8f4fd; border: 1px solid #4285f4; border-radius: 8px;">
-                <h3 style="color: #2c3e50; margin-top: 0;">① 標準ブラウザをChromeに変更する手順</h3>
-                
-                <h4 style="color: #2c3e50;">📱 BASIO端末のChrome設定手順</h4>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>1.</strong> 設定アプリを開く</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>2.</strong> その他をタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>3.</strong> アプリと通知をタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>4.</strong> デフォルトのアプリをタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>5.</strong> <span style="background: #ff9800; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Chrome</span>を選択</div>
-                
-                <h4 style="color: #2c3e50;">📱 Galaxy端末のChrome設定手順</h4>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>1.</strong> 設定アプリを開く</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>2.</strong> アプリをタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>3.</strong> 右上の ⋮（三点メニュー）をタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>4.</strong> 標準アプリをタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>5.</strong> ブラウザアプリをタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #4285f4; border-radius: 4px;"><strong>6.</strong> <span style="background: #ff9800; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Chrome</span>を選択</div>
-            </div>
-            
-            <!-- アプリ更新手順 -->
-            <div style="margin: 15px 0; padding: 15px; background: #f0fff4; border: 1px solid #34a853; border-radius: 8px;">
-                <h3 style="color: #2c3e50; margin-top: 0;">② アプリのアップデート実施手順（Android）</h3>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #34a853; border-radius: 4px;"><strong>1.</strong> Playストアを開く</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #34a853; border-radius: 4px;"><strong>2.</strong> 右上の丸アイコン（プロフィール）をタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #34a853; border-radius: 4px;"><strong>3.</strong> アプリとデバイスの管理をタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #34a853; border-radius: 4px;"><strong>4.</strong> 利用可能なアップデートがあります の部分をタップ</div>
-                <div style="margin: 8px 0; padding: 10px; background: white; border-left: 4px solid #34a853; border-radius: 4px;"><strong>5.</strong> <span style="background: #e74c3c; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Android System WebView</span> と <span style="background: #e74c3c; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Google Chrome</span> を更新</div>
-                
-                <div style="background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; padding: 15px; border-radius: 6px; margin: 20px 0;">
-                    <strong>🎯 重要：</strong> 特に <span style="background: #e74c3c; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Android System WebView</span> と <span style="background: #e74c3c; color: white; padding: 2px 6px; border-radius: 4px; font-weight: bold;">Google Chrome</span> の更新が重要です
+        <div style="padding: 30px;">
+            <!-- Step 1: 標準ブラウザ確認 -->
+            <div id="chrome-step1" class="chrome-wizard-step">
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🌐</div>
+                    <h3 style="color: #2c3e50; font-size: 1.4rem; margin: 0 0 10px 0;">標準ブラウザはChromeですか？</h3>
+                    <p style="color: #666; font-size: 1rem;">まず標準ブラウザの確認が必要です</p>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="showChromeStep('chrome-step2')" style="background: #4caf50; color: white; border: none; padding: 18px 50px; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; min-width: 140px;">はい</button>
+                    <button onclick="showChromeStep('browser-check-guide')" style="background: #2196f3; color: white; border: none; padding: 18px 50px; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; min-width: 140px;">いいえ / 不明</button>
                 </div>
             </div>
-            
-            <div style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 20px; text-align: center; font-weight: bold; border-radius: 8px; margin: 20px 0;">
-                ✅ 設定完了後、アプリを再起動してください<br>
-                QRコードが正常に読み取れるようになります
+
+            <!-- 標準ブラウザ設定手順 -->
+            <div id="browser-check-guide" class="chrome-wizard-step" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <button onclick="showChromeStep('chrome-step1')" style="background: none; border: none; color: #666; cursor: pointer; font-size: 1rem;">← 戻る</button>
+                </div>
+                <h3 style="color: #2196f3; text-align: center; margin-bottom: 20px;">🌐 標準ブラウザをChromeに設定</h3>
+                <div style="background: #e3f2fd; border-radius: 12px; padding: 20px;">
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #2196f3; border-radius: 6px; font-size: 1.1rem;"><strong>1.</strong> 「設定」アプリを開く</div>
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #2196f3; border-radius: 6px; font-size: 1.1rem;"><strong>2.</strong> 「アプリ」をタップ</div>
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #2196f3; border-radius: 6px; font-size: 1.1rem;"><strong>3.</strong> 「デフォルトのアプリ」をタップ</div>
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #2196f3; border-radius: 6px; font-size: 1.1rem;"><strong>4.</strong> 「ブラウザアプリ」をタップ</div>
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #2196f3; border-radius: 6px; font-size: 1.1rem;"><strong>5.</strong> <span style="background: #4caf50; color: white; padding: 2px 8px; border-radius: 4px;">Chrome</span> を選択</div>
+                </div>
+                <p style="color: #666; font-size: 0.9rem; text-align: center; margin-top: 15px;">※機種により手順が異なる場合があります</p>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button onclick="showChromeStep('chrome-step2')" style="background: #2196f3; color: white; border: none; padding: 15px 40px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">設定しました → 次へ</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Chrome更新確認 -->
+            <div id="chrome-step2" class="chrome-wizard-step" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <button onclick="showChromeStep('chrome-step1')" style="background: none; border: none; color: #666; cursor: pointer; font-size: 1rem;">← 戻る</button>
+                </div>
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">📱</div>
+                    <h3 style="color: #2c3e50; font-size: 1.4rem; margin: 0 0 10px 0;">Chromeは更新しましたか？</h3>
+                    <p style="color: #666; font-size: 1rem;">Playストアで「Chrome」を最新版に更新済みですか？</p>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="showChromeStep('chrome-step3')" style="background: #4caf50; color: white; border: none; padding: 18px 50px; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; min-width: 140px;">はい</button>
+                    <button onclick="showChromeStep('chrome-update-guide')" style="background: #2196f3; color: white; border: none; padding: 18px 50px; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; min-width: 140px;">いいえ</button>
+                </div>
+            </div>
+
+            <!-- Chrome更新手順 -->
+            <div id="chrome-update-guide" class="chrome-wizard-step" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <button onclick="showChromeStep('chrome-step2')" style="background: none; border: none; color: #666; cursor: pointer; font-size: 1rem;">← 戻る</button>
+                </div>
+                <h3 style="color: #4caf50; text-align: center; margin-bottom: 20px;">📲 Chromeを更新しましょう</h3>
+                <div style="background: #f8f9fa; border-radius: 12px; padding: 20px;">
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #4caf50; border-radius: 6px; font-size: 1.1rem;"><strong>1.</strong> Playストアを開く</div>
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #4caf50; border-radius: 6px; font-size: 1.1rem;"><strong>2.</strong> 右上の丸アイコンをタップ</div>
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #4caf50; border-radius: 6px; font-size: 1.1rem;"><strong>3.</strong> 「アプリとデバイスの管理」をタップ</div>
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #4caf50; border-radius: 6px; font-size: 1.1rem;"><strong>4.</strong> 「利用可能なアップデート」をタップ</div>
+                    <div style="margin: 10px 0; padding: 12px 15px; background: white; border-left: 4px solid #4caf50; border-radius: 6px; font-size: 1.1rem;"><strong>5.</strong> <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px;">Chrome</span> を更新</div>
+                </div>
+                <div style="text-align: center; margin-top: 25px;">
+                    <button onclick="showChromeStep('chrome-step3')" style="background: #4caf50; color: white; border: none; padding: 15px 40px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">更新しました → 次へ</button>
+                </div>
+            </div>
+
+            <!-- Step 3: WebView更新確認 -->
+            <div id="chrome-step3" class="chrome-wizard-step" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <button onclick="showChromeStep('chrome-step2')" style="background: none; border: none; color: #666; cursor: pointer; font-size: 1rem;">← 戻る</button>
+                </div>
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">⚙️</div>
+                    <h3 style="color: #2c3e50; font-size: 1.4rem; margin: 0 0 10px 0;">WebViewは更新しましたか？</h3>
+                    <p style="color: #666; font-size: 1rem;">「設定」→「アプリ一覧」から更新済みですか？</p>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="showChromeStep('chrome-complete')" style="background: #4caf50; color: white; border: none; padding: 18px 50px; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; min-width: 140px;">はい</button>
+                    <button onclick="showChromeStep('webview-update-guide')" style="background: #2196f3; color: white; border: none; padding: 18px 50px; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; min-width: 140px;">いいえ</button>
+                </div>
+            </div>
+
+            <!-- WebView更新手順（画像表示） -->
+            <div id="webview-update-guide" class="chrome-wizard-step" style="display: none;">
+                <div style="margin-bottom: 20px;">
+                    <button onclick="showChromeStep('chrome-step3')" style="background: none; border: none; color: #666; cursor: pointer; font-size: 1rem;">← 戻る</button>
+                </div>
+                <h3 style="color: #ff9800; text-align: center; margin-bottom: 20px;">⚙️ WebViewを更新しましょう</h3>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <img src="images/1051.png" alt="WebView更新手順" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                </div>
+                <div style="text-align: center; margin-top: 25px;">
+                    <button onclick="showChromeStep('chrome-complete')" style="background: #ff9800; color: white; border: none; padding: 15px 40px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">更新しました → 完了</button>
+                </div>
+            </div>
+
+            <!-- 完了画面 -->
+            <div id="chrome-complete" class="chrome-wizard-step" style="display: none;">
+                <div style="text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">✅</div>
+                    <h3 style="color: #4caf50; font-size: 1.5rem; margin-bottom: 15px;">設定完了！</h3>
+                    <p style="color: #666; font-size: 1.1rem; margin-bottom: 25px;">アプリを再起動してお試しください</p>
+                    <button onclick="hideInlineModal('chrome-modal'); resetChromeWizard();" style="background: #4caf50; color: white; border: none; padding: 15px 50px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">閉じる</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+    function showChromeStep(stepId) {
+        document.querySelectorAll('.chrome-wizard-step').forEach(step => step.style.display = 'none');
+        document.getElementById(stepId).style.display = 'block';
+    }
+    function resetChromeWizard() {
+        document.querySelectorAll('.chrome-wizard-step').forEach(step => step.style.display = 'none');
+        document.getElementById('chrome-step1').style.display = 'block';
+    }
+    </script>
 
     <!-- 友達紹介ガイドモーダル -->
     <div id="friend-referral-modal" class="inline-modal" style="display: none; background: white; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.2); margin: 20px auto; overflow: hidden; max-width: 1000px;">
@@ -3615,8 +3834,64 @@
             });
             document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
         }
-        
-        
+
+        // 症状フィルター機能
+        let activeSymptom = null;
+
+        function filterBySymptom(symptom, button) {
+            const faqItems = document.querySelectorAll(".faq-item");
+            const resultInfo = document.getElementById('symptomResultInfo');
+
+            // 同じボタンをクリックした場合はクリア
+            if (activeSymptom === symptom) {
+                clearSymptomFilter();
+                return;
+            }
+
+            // ボタンの状態更新
+            document.querySelectorAll('.symptom-tag').forEach(tag => tag.classList.remove('active'));
+            button.classList.add('active');
+            activeSymptom = symptom;
+
+            // 検索ボックスをクリア
+            document.querySelector('.search-box').value = '';
+
+            // カテゴリタブをリセット
+            document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+
+            // 症状に該当するFAQを表示
+            let matchCount = 0;
+            faqItems.forEach(item => {
+                const symptoms = item.getAttribute('data-symptoms') || '';
+                if (symptoms.includes(symptom)) {
+                    item.style.display = 'block';
+                    matchCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // 結果表示
+            const labelText = button.textContent;
+            resultInfo.querySelector('.result-text').textContent = `「${labelText}」に該当: ${matchCount}件`;
+            resultInfo.classList.add('show');
+        }
+
+        function clearSymptomFilter() {
+            activeSymptom = null;
+            document.querySelectorAll('.symptom-tag').forEach(tag => tag.classList.remove('active'));
+            document.getElementById('symptomResultInfo').classList.remove('show');
+
+            // すべてのFAQを表示して最初のタブを選択
+            const faqItems = document.querySelectorAll(".faq-item");
+            faqItems.forEach(item => item.style.display = 'block');
+
+            const firstTab = document.querySelector(".tab");
+            if (firstTab) {
+                filterFAQ('初期設定・申し込み', firstTab);
+            }
+        }
+
         // お気に入り機能
         function loadFavorites() {
             const favorites = JSON.parse(localStorage.getItem('faqFavorites') || '[]');
